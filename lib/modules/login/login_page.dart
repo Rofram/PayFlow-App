@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
         backgroundColor: AppColors.background,
-        body: Container(
+        body: SizedBox(
           width: size.width,
           height: size.height,
           child: Stack(children: [
@@ -57,7 +57,9 @@ class _LoginPageState extends State<LoginPage> {
                       padding:
                           const EdgeInsets.only(top: 40, left: 40, right: 40),
                       child: SocialLoginButton(
-                        onPressed: controller.handleGoogleSignIn,
+                        onPressed: () {
+                          controller.handleGoogleSignIn(context);
+                        },
                       ),
                     )
                   ]),
