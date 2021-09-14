@@ -58,10 +58,6 @@ class BottomSheetWidget extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    Container(
-                      height: 1,
-                      color: AppColors.stroke,
-                    ),
                     SetLabelButtons(
                         enablePrimaryColor: true,
                         primaryLabel: primaryLabel,

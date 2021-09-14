@@ -7,7 +7,7 @@ import 'barcode_scanner_status.dart';
 
 class BarcodeScannerController {
   final statusNotifier =
-  ValueNotifier<BarcodeScannerStatus>(BarcodeScannerStatus());
+      ValueNotifier<BarcodeScannerStatus>(BarcodeScannerStatus());
   BarcodeScannerStatus get status => statusNotifier.value;
   set status(BarcodeScannerStatus status) => statusNotifier.value = status;
 
@@ -20,7 +20,7 @@ class BarcodeScannerController {
     try {
       final response = await availableCameras();
       final camera = response.firstWhere(
-              (element) => element.lensDirection == CameraLensDirection.back);
+          (element) => element.lensDirection == CameraLensDirection.back);
       cameraController =
           CameraController(camera, ResolutionPreset.max, enableAudio: false);
       await cameraController!.initialize();
@@ -33,7 +33,8 @@ class BarcodeScannerController {
 
   Future<void> scannerBarCode(InputImage inputImage) async {
     try {
-      final barcodes = await barcodeScanner.processImage(inputImage);
+      final List<Barcode> barcodes =
+          await barcodeScanner.processImage(inputImage);
 
       String? barcode;
       for (Barcode item in barcodes) {
@@ -76,16 +77,21 @@ class BarcodeScannerController {
             for (Plane plane in cameraImage.planes) {
               allBytes.putUint8List(plane.bytes);
             }
+
             final bytes = allBytes.done().buffer.asUint8List();
+
             final Size imageSize = Size(
                 cameraImage.width.toDouble(), cameraImage.height.toDouble());
+
             const InputImageRotation imageRotation =
                 InputImageRotation.Rotation_0deg;
+
             final InputImageFormat inputImageFormat =
                 InputImageFormatMethods.fromRawValue(cameraImage.format.raw) ??
                     InputImageFormat.NV21;
+
             final planeData = cameraImage.planes.map(
-                  (Plane plane) {
+              (Plane plane) {
                 return InputImagePlaneMetadata(
                   bytesPerRow: plane.bytesPerRow,
                   height: plane.height,
@@ -100,6 +106,7 @@ class BarcodeScannerController {
               inputImageFormat: inputImageFormat,
               planeData: planeData,
             );
+
             final inputImageCamera = InputImage.fromBytes(
                 bytes: bytes, inputImageData: inputImageData);
             scannerBarCode(inputImageCamera);

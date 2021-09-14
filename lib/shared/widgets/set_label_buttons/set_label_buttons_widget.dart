@@ -12,6 +12,7 @@ class SetLabelButtons extends StatelessWidget {
   final VoidCallback secondaryonPressed;
 
   final bool enablePrimaryColor;
+  final bool enableSecondaryColor;
 
   const SetLabelButtons(
       {Key? key,
@@ -19,28 +20,44 @@ class SetLabelButtons extends StatelessWidget {
       required this.secondaryLabel,
       required this.primaryonPressed,
       required this.secondaryonPressed,
-      this.enablePrimaryColor = false})
+      this.enablePrimaryColor = false,
+      this.enableSecondaryColor = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.shape,
-      height: 56,
-      child: Row(
+      color: AppColors.background,
+      height: 57,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-            child: LabelButton(
-              label: primaryLabel,
-              onPressed: primaryonPressed,
-              style: enablePrimaryColor ? TextStyles.buttonPrimary : null,
-            ),
+          const Divider(
+            color: AppColors.stroke,
+            thickness: 1,
+            height: 1,
           ),
-          const DividerVertical(),
-          Expanded(
-            child: LabelButton(
-              label: secondaryLabel,
-              onPressed: secondaryonPressed,
+          SizedBox(
+            height: 56,
+            child: Row(
+              children: [
+                Expanded(
+                  child: LabelButton(
+                    label: primaryLabel,
+                    onPressed: primaryonPressed,
+                    style: enablePrimaryColor ? TextStyles.buttonPrimary : null,
+                  ),
+                ),
+                const DividerVertical(),
+                Expanded(
+                  child: LabelButton(
+                    label: secondaryLabel,
+                    onPressed: secondaryonPressed,
+                    style:
+                        enableSecondaryColor ? TextStyles.buttonPrimary : null,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
